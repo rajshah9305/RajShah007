@@ -128,15 +128,24 @@ export function Header() {
                   <ChevronDown className="h-4 w-4 opacity-50" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 glassmorphism">
-                {dropdownItems.map((item, index) => (
-                  <DropdownMenuItem key={index} className="cursor-pointer">
-                    <Link href={item.href} className="w-full">
-                      {item.label}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
+              <AnimatePresence>
+                <DropdownMenuContent align="end" className="w-48 glassmorphism" asChild>
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                  >
+                    {dropdownItems.map((item, index) => (
+                      <DropdownMenuItem key={index} className="cursor-pointer">
+                        <Link href={item.href} className="w-full">
+                          {item.label}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </motion.div>
+                </DropdownMenuContent>
+              </AnimatePresence>
             </DropdownMenu>
           </nav>
         </div>
@@ -197,15 +206,24 @@ export function Header() {
                     <ChevronDown className="h-4 w-4 opacity-50" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  {dropdownItems.map((item, index) => (
-                    <DropdownMenuItem key={index} className="cursor-pointer">
-                      <Link href={item.href} className="w-full">
-                        {item.label}
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
+                <AnimatePresence>
+                  <DropdownMenuContent align="end" className="w-48" asChild>
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                    >
+                      {dropdownItems.map((item, index) => (
+                        <DropdownMenuItem key={index} className="cursor-pointer">
+                          <Link href={item.href} className="w-full">
+                            {item.label}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </motion.div>
+                  </DropdownMenuContent>
+                </AnimatePresence>
               </DropdownMenu>
 
               <hr className="my-2 border-border" />

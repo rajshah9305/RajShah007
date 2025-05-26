@@ -22,6 +22,11 @@ export function ToolsSection() {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
 
+  const arrowVariants = {
+    rest: { x: 0 },
+    hover: { x: 5 },
+  }
+
   const tools: ToolCardProps[] = [
     {
       icon: "/images/tools/chat.svg",
@@ -143,9 +148,22 @@ export function ToolsSection() {
                   <p className="text-muted-foreground">{tool.description}</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost" className="w-full justify-between group">
-                    <span>Try it now</span>
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <Button variant="ghost" asChild>
+                    <motion.button
+                      className="w-full justify-between group flex items-center" // Retain original classes, ensure flex for proper alignment
+                      whileHover="hover"
+                      initial="rest"
+                      animate="rest"
+                    >
+                      <span>Try it now</span>
+                      <motion.span
+                        variants={arrowVariants}
+                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                        className="inline-block" // Added inline-block for motion.span
+                      >
+                        <ArrowRight className="h-4 w-4" />
+                      </motion.span>
+                    </motion.button>
                   </Button>
                 </CardFooter>
               </ToolCard3D>

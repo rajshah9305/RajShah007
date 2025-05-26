@@ -232,7 +232,8 @@ export function HeroSection() {
         >
           <div className="card-3d">
             <div className="card-3d-inner">
-              <div className="glassmorphism rounded-xl overflow-hidden border border-white/20 dark:border-slate-700/20 shadow-xl">
+              {/* Removed shadow-xl from here to let the .card-3d-inner's global reactive shadow take effect */}
+              <div className="glassmorphism rounded-xl overflow-hidden border border-white/20 dark:border-slate-700/20">
                 <div className="absolute top-0 left-0 right-0 h-8 bg-slate-100/80 dark:bg-slate-800/80 backdrop-blur-sm flex items-center px-4">
                   <div className="flex gap-2">
                     <div className="h-3 w-3 rounded-full bg-rose-500"></div>

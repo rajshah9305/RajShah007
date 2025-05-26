@@ -4,6 +4,7 @@ import { useCallback } from "react"
 import Link from "next/link"
 import { Github, Twitter, Linkedin, Facebook } from "lucide-react"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 export function Footer() {
   const scrollToSection = useCallback((sectionId: string) => {
@@ -45,19 +46,43 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                <Twitter className="h-5 w-5" />
+                <motion.span
+                  whileHover={{ y: -2, scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                  className="inline-block"
+                >
+                  <Twitter className="h-5 w-5" />
+                </motion.span>
                 <span className="sr-only">Twitter</span>
               </Link>
               <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                <Github className="h-5 w-5" />
+                <motion.span
+                  whileHover={{ y: -2, scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                  className="inline-block"
+                >
+                  <Github className="h-5 w-5" />
+                </motion.span>
                 <span className="sr-only">GitHub</span>
               </Link>
               <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                <Linkedin className="h-5 w-5" />
+                <motion.span
+                  whileHover={{ y: -2, scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                  className="inline-block"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </motion.span>
                 <span className="sr-only">LinkedIn</span>
               </Link>
               <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                <Facebook className="h-5 w-5" />
+                <motion.span
+                  whileHover={{ y: -2, scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                  className="inline-block"
+                >
+                  <Facebook className="h-5 w-5" />
+                </motion.span>
                 <span className="sr-only">Facebook</span>
               </Link>
             </div>
