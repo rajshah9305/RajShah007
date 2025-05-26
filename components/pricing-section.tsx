@@ -1,115 +1,39 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { useState, useRef } from "react"
+import { motion, useInView } from "framer-motion"
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Check, Sparkles } from "lucide-react"
+import { Check, Sparkles, X } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
+import PricingCard3D from "@/components/pricing-card-3d"
 
-interface PricingCardProps {
+interface PricingPlan {
   title: string
   price: {
     monthly: string
     annual: string
   }
   description: string
-  features: string[]
+  features: {
+    text: string
+    included: boolean
+  }[]
   buttonText: string
   buttonVariant: "default" | "outline" | "secondary"
   highlighted?: boolean
   delay?: number
-  billingCycle: "monthly" | "annual"
-}
-
-function PricingCard({
-  title,
-  price,
-  description,
-  features,
-  buttonText,
-  buttonVariant,
-  highlighted = false,
-  delay = 0,
-  billingCycle,
-}: PricingCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-
-  // Display the current price based on billing cycle
-  const displayPrice = billingCycle === "monthly" ? price.monthly : price.annual
-  const isFree = displayPrice === "$0"
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      viewport={{ once: true }}
-    >
-      <Card
-        className={`flex flex-col transition-all duration-300 ${
-          highlighted
-            ? `border-primary shadow-medium relative ${isHovered ? "transform -translate-y-2" : ""}`
-            : isHovered
-              ? "shadow-medium transform -translate-y-1"
-              : ""
-        }`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {highlighted && (
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <span className="bg-primary text-primary-foreground text-xs font-medium px-4 py-1.5 rounded-full shadow-medium flex items-center gap-1.5">
-              <Sparkles className="h-3.5 w-3.5" />
-              Most Popular
-            </span>
-          </div>
-        )}
-        <CardHeader className={`pb-8 ${highlighted ? "pt-8" : ""}`}>
-          <h3 className="text-xl font-bold">{title}</h3>
-          <div className="mt-4 flex items-baseline">
-            <span className={`text-3xl font-extrabold ${highlighted ? "text-primary" : ""}`}>{displayPrice}</span>
-            {!isFree && (
-              <span className="ml-1 text-muted-foreground">{billingCycle === "monthly" ? "/month" : "/year"}</span>
-            )}
-          </div>
-          <p className="text-sm text-muted-foreground mt-2">{description}</p>
-        </CardHeader>
-        <CardContent className="flex-1">
-          <ul className="space-y-3">
-            {features.map((feature, index) => (
-              <li key={index} className="flex items-start">
-                <div
-                  className={`rounded-full p-0.5 ${
-                    highlighted ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
-                  }`}
-                >
-                  <Check className="h-4 w-4" />
-                </div>
-                <span className="text-sm ml-2">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-        <CardFooter className="pt-6">
-          <Button
-            variant={buttonVariant}
-            className={`w-full transition-all ${isHovered ? "transform scale-[1.02]" : ""}`}
-          >
-            {buttonText}
-          </Button>
-        </CardFooter>
-      </Card>
-    </motion.div>
-  )
+  color?: string
 }
 
 export function PricingSection() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly")
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, amount: 0.2 })
 
   // Define pricing data
-  const pricingPlans = [
+  const pricingPlans: PricingPlan[] = [
     {
       title: "Free",
       price: {
@@ -118,14 +42,18 @@ export function PricingSection() {
       },
       description: "Perfect for trying out our platform.",
       features: [
-        "Access to basic AI models",
-        "5 AI generations per day",
-        "Standard response time",
-        "Community support",
+        { text: "Access to basic AI models", included: true },
+        { text: "5 AI generations per day", included: true },
+        { text: "Standard response time", included: true },
+        { text: "Community support", included: true },
+        { text: "API access", included: false },
+        { text: "Custom AI training", included: false },
+        { text: "Priority support", included: false },
       ],
       buttonText: "Get Started",
-      buttonVariant: "outline" as const,
+      buttonVariant: "outline",
       delay: 0.1,
+      color: "from-slate-400 to-slate-500",
     },
     {
       title: "Pro",
@@ -135,17 +63,19 @@ export function PricingSection() {
       },
       description: "For professionals and small teams.",
       features: [
-        "Access to all AI models",
-        "Unlimited AI generations",
-        "Priority response time",
-        "Email support",
-        "API access",
-        "Custom AI training",
+        { text: "Access to all AI models", included: true },
+        { text: "Unlimited AI generations", included: true },
+        { text: "Priority response time", included: true },
+        { text: "Email support", included: true },
+        { text: "API access", included: true },
+        { text: "Custom AI training", included: true },
+        { text: "Priority support", included: false },
       ],
       buttonText: "Subscribe",
-      buttonVariant: "default" as const,
+      buttonVariant: "default",
       highlighted: true,
       delay: 0.2,
+      color: "from-primary to-violet-500",
     },
     {
       title: "Enterprise",
@@ -155,17 +85,18 @@ export function PricingSection() {
       },
       description: "For organizations with advanced needs.",
       features: [
-        "Everything in Pro",
-        "Dedicated instance",
-        "99.9% uptime SLA",
-        "24/7 phone support",
-        "Custom integrations",
-        "Advanced analytics",
-        "User role management",
+        { text: "Everything in Pro", included: true },
+        { text: "Dedicated instance", included: true },
+        { text: "99.9% uptime SLA", included: true },
+        { text: "24/7 phone support", included: true },
+        { text: "Custom integrations", included: true },
+        { text: "Advanced analytics", included: true },
+        { text: "User role management", included: true },
       ],
       buttonText: "Contact Sales",
-      buttonVariant: "secondary" as const,
+      buttonVariant: "secondary",
       delay: 0.3,
+      color: "from-secondary to-teal-500",
     },
   ]
 
@@ -174,8 +105,29 @@ export function PricingSection() {
   const annualPrice = Number.parseFloat(pricingPlans[1].price.annual.replace("$", ""))
   const savingsPercentage = Math.round(((monthlyPrice - annualPrice) / monthlyPrice) * 100)
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  }
+
   return (
-    <section id="pricing" className="py-24 relative">
+    <section id="pricing" className="py-24 relative" ref={ref}>
       <div className="absolute inset-0 -z-10 bg-grid opacity-[0.02]"></div>
       <div className="absolute top-0 right-0 -z-10 h-[400px] w-[400px] rounded-full bg-secondary/5 blur-[100px]"></div>
       <div className="absolute bottom-0 left-0 -z-10 h-[400px] w-[400px] rounded-full bg-accent/5 blur-[100px]"></div>
@@ -184,9 +136,8 @@ export function PricingSection() {
         <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
           >
             <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-secondary/10 text-secondary border-secondary/20">
               Pricing
@@ -199,40 +150,108 @@ export function PricingSection() {
         </div>
 
         <div className="flex justify-center mb-12">
-          <div className="flex items-center gap-4">
-            <Label htmlFor="billing-toggle" className={billingCycle === "monthly" ? "font-medium" : ""}>
+          <motion.div
+            className="flex items-center gap-4 p-2 rounded-full bg-muted/50 backdrop-blur-sm"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <Label
+              htmlFor="billing-toggle"
+              className={`px-4 py-2 rounded-full transition-colors duration-300 ${
+                billingCycle === "monthly"
+                  ? "bg-white dark:bg-slate-800 shadow-sm font-medium"
+                  : "text-muted-foreground"
+              }`}
+            >
               Monthly
             </Label>
             <Switch
               id="billing-toggle"
               checked={billingCycle === "annual"}
               onCheckedChange={(checked) => setBillingCycle(checked ? "annual" : "monthly")}
+              className="data-[state=checked]:bg-primary"
             />
             <div className="flex flex-col items-start">
-              <Label htmlFor="billing-toggle" className={billingCycle === "annual" ? "font-medium" : ""}>
+              <Label
+                htmlFor="billing-toggle"
+                className={`px-4 py-2 rounded-full transition-colors duration-300 ${
+                  billingCycle === "annual"
+                    ? "bg-white dark:bg-slate-800 shadow-sm font-medium"
+                    : "text-muted-foreground"
+                }`}
+              >
                 Annual
               </Label>
-              {billingCycle === "annual" && <span className="text-xs text-primary">Save {savingsPercentage}%</span>}
+              {billingCycle === "annual" && (
+                <span className="text-xs text-primary ml-4">Save {savingsPercentage}%</span>
+              )}
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <motion.div
+          className="grid md:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {pricingPlans.map((plan, index) => (
-            <PricingCard
-              key={index}
-              title={plan.title}
-              price={plan.price}
-              description={plan.description}
-              features={plan.features}
-              buttonText={plan.buttonText}
-              buttonVariant={plan.buttonVariant}
-              highlighted={plan.highlighted}
-              delay={plan.delay}
-              billingCycle={billingCycle}
-            />
+            <motion.div key={index} variants={itemVariants}>
+              <PricingCard3D highlighted={plan.highlighted} color={plan.color}>
+                <CardHeader className={`pb-8 ${plan.highlighted ? "pt-8" : ""}`}>
+                  {plan.highlighted && (
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <span className="bg-primary text-primary-foreground text-xs font-medium px-4 py-1.5 rounded-full shadow-medium flex items-center gap-1.5">
+                        <Sparkles className="h-3.5 w-3.5" />
+                        Most Popular
+                      </span>
+                    </div>
+                  )}
+                  <h3 className="text-xl font-bold">{plan.title}</h3>
+                  <div className="mt-4 flex items-baseline">
+                    <span className={`text-3xl font-extrabold ${plan.highlighted ? "text-primary" : ""}`}>
+                      {billingCycle === "monthly" ? plan.price.monthly : plan.price.annual}
+                    </span>
+                    {plan.price.monthly !== "$0" && (
+                      <span className="ml-1 text-muted-foreground">
+                        {billingCycle === "monthly" ? "/month" : "/year"}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">{plan.description}</p>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <ul className="space-y-3">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start">
+                        <div
+                          className={`rounded-full p-0.5 ${
+                            feature.included
+                              ? plan.highlighted
+                                ? "bg-primary/20 text-primary"
+                                : "bg-muted text-muted-foreground"
+                              : "bg-muted/50 text-muted-foreground/50"
+                          }`}
+                        >
+                          {feature.included ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
+                        </div>
+                        <span className={`text-sm ml-2 ${!feature.included ? "text-muted-foreground/50" : ""}`}>
+                          {feature.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter className="pt-6">
+                  <Button variant={plan.buttonVariant} className="w-full transition-all hover:scale-[1.02]">
+                    {plan.buttonText}
+                  </Button>
+                </CardFooter>
+              </PricingCard3D>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
