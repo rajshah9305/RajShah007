@@ -1,17 +1,16 @@
 "use client"
 
-import type React from "react"
-
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, MessageSquare, Code, ImageIcon, Bot, BarChart3, Zap } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import ToolCard3D from "@/components/tool-card-3d"
+import Image from "next/image"
 
 interface ToolCardProps {
-  icon: React.ReactNode
+  icon: string
   title: string
   description: string
   tag?: string
@@ -25,7 +24,7 @@ export function ToolsSection() {
 
   const tools: ToolCardProps[] = [
     {
-      icon: <MessageSquare className="h-6 w-6" />,
+      icon: "/images/tools/chat.svg",
       title: "AI Chat Assistant",
       description: "Conversational AI powered by state-of-the-art language models.",
       tag: "Popular",
@@ -33,7 +32,7 @@ export function ToolsSection() {
       color: "from-primary to-violet-500",
     },
     {
-      icon: <Code className="h-6 w-6" />,
+      icon: "/images/tools/code.svg",
       title: "Code Generator",
       description: "Generate code snippets and complete functions in multiple languages.",
       tag: "New",
@@ -41,28 +40,28 @@ export function ToolsSection() {
       color: "from-cyan-600 to-blue-600",
     },
     {
-      icon: <ImageIcon className="h-6 w-6" />,
+      icon: "/images/tools/image.svg",
       title: "Image Generator",
       description: "Create stunning images from text descriptions with diffusion models.",
       delay: 0.3,
       color: "from-pink-600 to-rose-600",
     },
     {
-      icon: <Bot className="h-6 w-6" />,
+      icon: "/images/tools/agent.svg",
       title: "Custom Agents",
       description: "Build specialized AI agents that can perform complex tasks.",
       delay: 0.4,
       color: "from-amber-600 to-orange-600",
     },
     {
-      icon: <BarChart3 className="h-6 w-6" />,
+      icon: "/images/tools/data.svg",
       title: "Data Analyzer",
       description: "Extract insights and visualize patterns in your data automatically.",
       delay: 0.5,
       color: "from-emerald-600 to-green-600",
     },
     {
-      icon: <Zap className="h-6 w-6" />,
+      icon: "/images/tools/workflow.svg",
       title: "Workflow Automation",
       description: "Automate repetitive tasks with intelligent AI workflows.",
       tag: "Beta",
@@ -126,8 +125,8 @@ export function ToolsSection() {
               <ToolCard3D color={tool.color}>
                 <CardHeader className="pb-2">
                   <div className="flex justify-between items-start">
-                    <div className="p-3 rounded-lg text-white bg-gradient-to-r from-primary to-violet-500">
-                      {tool.icon}
+                    <div className="p-3 rounded-lg flex items-center justify-center">
+                      <Image src={tool.icon || "/placeholder.svg"} alt={tool.title} width={64} height={64} />
                     </div>
                     {tool.tag && (
                       <Badge

@@ -1,0 +1,29 @@
+<svg width="500" height="300" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="500" height="300" rx="12" fill="#F8FAFC"/>
+  
+  <!-- Grid lines -->
+  <line x1="50" y1="50" x2="50" y2="250" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="150" y1="50" x2="150" y2="250" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="250" y1="50" x2="250" y2="250" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="350" y1="50" x2="350" y2="250" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="450" y1="50" x2="450" y2="250" stroke="#E2E8F0" stroke-width="1"/>
+  
+  <line x1="50" y1="50" x2="450" y2="50" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="50" y1="100" x2="450" y2="100" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="50" y1="150" x2="450" y2="150" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="50" y1="200" x2="450" y2="200" stroke="#E2E8F0" stroke-width="1"/>
+  <line x1="50" y1="250" x2="450" y2="250" stroke="#E2E8F0" stroke-width="1"/>
+  
+  <!-- Chart bars -->
+  <rect x="70" y="200" width="40" height="50" rx="4" fill="#7C3AED"/>
+  <rect x="170" y="150" width="40" height="100" rx="4" fill="#7C3AED"/>
+  <rect x="270" y="100" width="40" height="150" rx="4" fill="#7C3AED"/>
+  <rect x="370" y="80" width="40" height="170" rx="4" fill="#7C3AED"/>
+  
+  <!-- Line chart -->
+  <path d="M90 180 L190 130 L290 80 L390 60" stroke="#06B6D4" stroke-width="3" fill="none"/>
+  <circle cx="90" cy="180" r="5" fill="#06B6D4"/>
+  <circle cx="190" cy="130" r="5" fill="#06B6D4"/>
+  <circle cx="290" cy="80" r="5" fill="#06B6D4"/>
+  <circle cx="390" cy="60" r="5" fill="#06B6D4"/>
+</svg>

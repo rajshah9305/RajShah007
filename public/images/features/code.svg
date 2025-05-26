@@ -1,0 +1,42 @@
+<svg width="500" height="300" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="500" height="300" rx="12" fill="#0F172A"/>
+  
+  <!-- Code editor interface -->
+  <rect x="50" y="50" width="400" height="200" rx="8" fill="#1E293B"/>
+  
+  <!-- Line numbers -->
+  <text x="65" y="80" font-family="monospace" font-size="14" fill="#64748B">1</text>
+  <text x="65" y="110" font-family="monospace" font-size="14" fill="#64748B">2</text>
+  <text x="65" y="140" font-family="monospace" font-size="14" fill="#64748B">3</text>
+  <text x="65" y="170" font-family="monospace" font-size="14" fill="#64748B">4</text>
+  <text x="65" y="200" font-family="monospace" font-size="14" fill="#64748B">5</text>
+  <text x="65" y="230" font-family="monospace" font-size="14" fill="#64748B">6</text>
+  
+  <!-- Code syntax highlighting -->
+  <text x="85" y="80" font-family="monospace" font-size="14" fill="#C084FC">function</text>
+  <text x="145" y="80" font-family="monospace" font-size="14" fill="#38BDF8">analyzeData</text>
+  <text x="225" y="80" font-family="monospace" font-size="14" fill="#E2E8F0">(data) {</text>
+  
+  <text x="105" y="110" font-family="monospace" font-size="14" fill="#C084FC">const</text>
+  <text x="145" y="110" font-family="monospace" font-size="14" fill="#38BDF8">results</text>
+  <text x="195" y="110" font-family="monospace" font-size="14" fill="#E2E8F0">=</text>
+  <text x="205" y="110" font-family="monospace" font-size="14" fill="#38BDF8">processData</text>
+  <text x="285" y="110" font-family="monospace" font-size="14" fill="#E2E8F0">(data);</text>
+  
+  <text x="105" y="140" font-family="monospace" font-size="14" fill="#C084FC">return</text>
+  <text x="155" y="140" font-family="monospace" font-size="14" fill="#E2E8F0">{</text>
+  
+  <text x="125" y="170" font-family="monospace" font-size="14" fill="#38BDF8">summary</text>
+  <text x="185" y="170" font-family="monospace" font-size="14" fill="#E2E8F0">:</text>
+  <text x="195" y="170" font-family="monospace" font-size="14" fill="#38BDF8">results.summary</text>
+  <text x="315" y="170" font-family="monospace" font-size="14" fill="#E2E8F0">,</text>
+  
+  <text x="125" y="200" font-family="monospace" font-size="14" fill="#38BDF8">insights</text>
+  <text x="185" y="200" font-family="monospace" font-size="14" fill="#E2E8F0">:</text>
+  <text x="195" y="200" font-family="monospace" font-size="14" fill="#38BDF8">results.insights</text>
+  
+  <text x="105" y="230" font-family="monospace" font-size="14" fill="#E2E8F0">};</text>
+  
+  <!-- Cursor -->
+  <rect x="315" y="230" width="2" height="14" fill="#38BDF8"/>
+</svg>

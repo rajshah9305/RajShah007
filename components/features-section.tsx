@@ -7,6 +7,7 @@ import { Zap, BarChart3, Bot, Code, ArrowRight, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import FeatureCard3D from "@/components/feature-card-3d"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export function FeaturesSection() {
   const [activeTab, setActiveTab] = useState("processing")
@@ -19,7 +20,7 @@ export function FeaturesSection() {
       title: "Fast Processing",
       icon: <Zap className="h-10 w-10 text-primary" />,
       description: "Process data and generate content in seconds with optimized AI models.",
-      image: "/placeholder.svg?height=300&width=500",
+      image: "/images/features/processing.svg",
       details: [
         "10x faster than traditional methods",
         "Optimized for real-time applications",
@@ -32,7 +33,7 @@ export function FeaturesSection() {
       title: "Advanced Analytics",
       icon: <BarChart3 className="h-10 w-10 text-primary" />,
       description: "Gain insights from your data with AI-powered analytics and visualization.",
-      image: "/placeholder.svg?height=300&width=500",
+      image: "/images/features/analytics.svg",
       details: [
         "Predictive analytics and forecasting",
         "Anomaly detection and pattern recognition",
@@ -45,7 +46,7 @@ export function FeaturesSection() {
       title: "Custom Assistants",
       icon: <Bot className="h-10 w-10 text-primary" />,
       description: "Create specialized AI assistants tailored to your specific needs.",
-      image: "/placeholder.svg?height=300&width=500",
+      image: "/images/features/assistants.svg",
       details: ["Domain-specific knowledge integration", "Customizable personality and tone", "Multi-language support"],
       color: "from-pink-600 to-rose-600",
     },
@@ -54,7 +55,7 @@ export function FeaturesSection() {
       title: "Code Generation",
       icon: <Code className="h-10 w-10 text-primary" />,
       description: "Generate code snippets and complete functions in multiple languages.",
-      image: "/placeholder.svg?height=300&width=500",
+      image: "/images/features/code.svg",
       details: ["Supports 20+ programming languages", "Code explanation and documentation", "Bug detection and fixing"],
       color: "from-amber-600 to-orange-600",
     },
@@ -166,9 +167,11 @@ export function FeaturesSection() {
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="bg-muted rounded-lg overflow-hidden"
                   >
-                    <img
+                    <Image
                       src={feature.image || "/placeholder.svg"}
                       alt={feature.title}
+                      width={500}
+                      height={300}
                       className="w-full h-auto object-cover"
                     />
                   </motion.div>

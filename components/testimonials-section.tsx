@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
+import { motion, useInView } from "framer-motion"
 import { CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react"
@@ -18,6 +18,8 @@ interface Testimonial {
 export function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [direction, setDirection] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, amount: 0.2 })
 
   const testimonials: Testimonial[] = [
     {
@@ -25,8 +27,7 @@ export function TestimonialsSection() {
         "This AI platform has completely transformed our workflow. The tools are incredibly intuitive yet powerful, and the results have exceeded our expectations. We've seen a 40% increase in productivity since implementation.",
       author: "Jessica Williams",
       role: "Marketing Director at GrowthLabs",
-      avatar:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_6846.JPG-H0J7OdnvNZ8zPQrmOC3HN4R6fBzoFJ.jpeg",
+      avatar: "/images/testimonials/person-1.png",
       rating: 5,
     },
     {
@@ -34,7 +35,7 @@ export function TestimonialsSection() {
         "The code generation capabilities are nothing short of revolutionary. It's like having an expert developer by your side 24/7, helping you solve complex problems with elegant solutions. This has cut our development time in half.",
       author: "Michael Chen",
       role: "Senior Developer at DevStudio",
-      avatar: "/placeholder.svg?height=100&width=100",
+      avatar: "/images/testimonials/person-2.png",
       rating: 5,
     },
     {
@@ -42,7 +43,7 @@ export function TestimonialsSection() {
         "As a creative professional, the image generation tools have been a game-changer. The quality and variety of outputs are impressive, and the customization options allow me to achieve exactly what I envision. Worth every penny.",
       author: "Sarah Johnson",
       role: "Creative Director at ArtisanMedia",
-      avatar: "/placeholder.svg?height=100&width=100",
+      avatar: "/images/testimonials/person-3.png",
       rating: 4,
     },
   ]
@@ -66,7 +67,7 @@ export function TestimonialsSection() {
   }, [])
 
   return (
-    <section id="testimonials" className="py-24 relative">
+    <section id="testimonials" className="py-24 relative" ref={ref}>
       <div className="absolute inset-0 -z-10 bg-grid opacity-[0.02]"></div>
       <div className="absolute top-0 right-0 -z-10 h-[400px] w-[400px] rounded-full bg-primary/5 blur-[100px]"></div>
       <div className="absolute bottom-0 left-0 -z-10 h-[400px] w-[400px] rounded-full bg-secondary/5 blur-[100px]"></div>
@@ -75,9 +76,8 @@ export function TestimonialsSection() {
         <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
           >
             <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-secondary/10 text-secondary border-secondary/20">
               Testimonials

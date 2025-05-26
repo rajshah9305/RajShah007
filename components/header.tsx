@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { cn } from "@/lib/utils"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -82,22 +83,17 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2 relative group">
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-r from-primary to-violet-500 text-white overflow-hidden">
-              <span className="font-bold relative z-10">AI</span>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-violet-600 to-primary"
-                animate={{
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 3,
-                  ease: "linear",
-                  repeat: Number.POSITIVE_INFINITY,
-                }}
-              />
+            <div className="relative flex h-8 w-8 items-center justify-center">
+              <Image src="/images/logo/logo.svg" alt="AI Nexus Logo" width={40} height={40} />
             </div>
             <span className="font-bold text-xl hidden sm:inline-block relative">
-              Nexus
+              <Image
+                src="/images/logo/logo-full.svg"
+                alt="AI Nexus"
+                width={120}
+                height={40}
+                className="hidden sm:block"
+              />
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
             </span>
           </Link>

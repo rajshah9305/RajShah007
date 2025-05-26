@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import HeroCanvas from "@/components/hero-canvas"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export function HeroSection() {
   const [isHovered, setIsHovered] = useState(false)
@@ -52,9 +53,39 @@ export function HeroSection() {
 
   return (
     <section ref={containerRef} className="relative overflow-hidden min-h-[90vh] flex items-center py-20 md:py-32">
-      {/* Canvas Background */}
+      {/* Background Elements */}
       <div className="absolute inset-0 -z-10">
         <HeroCanvas />
+      </div>
+      <div className="absolute top-0 right-0 -z-10">
+        <Image
+          src="/images/hero/hero-shape-1.svg"
+          alt=""
+          width={600}
+          height={600}
+          className="opacity-50"
+          aria-hidden="true"
+        />
+      </div>
+      <div className="absolute bottom-0 left-0 -z-10">
+        <Image
+          src="/images/hero/hero-shape-2.svg"
+          alt=""
+          width={600}
+          height={600}
+          className="opacity-50"
+          aria-hidden="true"
+        />
+      </div>
+      <div className="absolute inset-0 -z-10 opacity-10">
+        <Image
+          src="/images/hero/hero-dots.svg"
+          alt=""
+          width={400}
+          height={400}
+          className="w-full h-full object-cover"
+          aria-hidden="true"
+        />
       </div>
 
       {/* Content */}
@@ -210,9 +241,11 @@ export function HeroSection() {
                   </div>
                 </div>
                 <div className="pt-8">
-                  <img
-                    src="/placeholder.svg?height=600&width=1200"
-                    alt="AI Nexus Dashboard"
+                  <Image
+                    src="/images/hero/dashboard.png"
+                    alt="AI Nexus Dashboard Interface"
+                    width={1200}
+                    height={600}
                     className="w-full h-auto object-cover"
                   />
                 </div>

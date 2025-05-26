@@ -3,6 +3,7 @@
 import { useCallback } from "react"
 import Link from "next/link"
 import { Github, Twitter, Linkedin, Facebook } from "lucide-react"
+import Image from "next/image"
 
 export function Footer() {
   const scrollToSection = useCallback((sectionId: string) => {
@@ -21,15 +22,22 @@ export function Footer() {
   }, [])
 
   return (
-    <footer className="border-t py-12 md:py-16">
+    <footer className="border-t py-12 md:py-16 relative">
+      <div className="absolute inset-0 -z-10 opacity-5">
+        <Image
+          src="/images/patterns/dots.svg"
+          alt=""
+          width={20}
+          height={20}
+          className="w-full h-full object-cover"
+          aria-hidden="true"
+        />
+      </div>
       <div className="container">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="relative flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-                <span className="font-bold">AI</span>
-              </div>
-              <span className="font-bold text-xl">Nexus</span>
+              <Image src="/images/logo/logo-full.svg" alt="AI Nexus" width={160} height={40} />
             </Link>
             <p className="text-muted-foreground mb-4 max-w-xs">
               Access powerful AI models and tools in one platform. Create, analyze, and automate with state-of-the-art
