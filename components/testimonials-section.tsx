@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { motion, useInView, AnimatePresence } from "framer-motion"
 import { CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react"
@@ -17,9 +17,26 @@ interface Testimonial {
 
 export function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [direction, setDirection] = useState(0)
+  const [direction, setDirection] = useState(0) // 1 for next, -1 for prev
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
+
+  const testimonialVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 500 : -500, // Start further off-screen
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 500 : -500, // Exit further off-screen
+      opacity: 0,
+    }),
+  }
 
   const testimonials: Testimonial[] = [
     {
@@ -90,52 +107,65 @@ export function TestimonialsSection() {
         </div>
 
         <div className="relative max-w-4xl mx-auto">
-          <div className="overflow-hidden rounded-lg bg-card shadow-medium border">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-            >
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="w-full flex-shrink-0 px-4 py-8">
-                  <CardContent className="p-8 relative">
-                    <div className="flex flex-col md:flex-row gap-8 items-center">
-                      <div className="md:w-1/3 flex flex-col items-center">
-                        <Avatar className="h-20 w-20 border-4 border-background shadow-medium">
-                          <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.author} />
-                          <AvatarFallback className="bg-primary text-primary-foreground">
-                            {testimonial.author
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="text-center mt-4">
-                          <h4 className="font-bold text-lg">{testimonial.author}</h4>
-                          <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                          <div className="flex items-center justify-center mt-2">
-                            {Array.from({ length: 5 }).map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`h-4 w-4 ${
-                                  i < testimonial.rating ? "text-yellow-500 fill-yellow-500" : "text-muted"
-                                }`}
-                              />
-                            ))}
+          {/* This outer div will act as the viewport for AnimatePresence */}
+          <div className="overflow-hidden rounded-lg bg-card shadow-medium border relative min-h-[450px] md:min-h-[350px]">
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.div
+                key={activeIndex} // Important for AnimatePresence to detect changes
+                custom={direction}
+                variants={testimonialVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.2 },
+                }}
+                className="absolute w-full h-full px-4 py-8" // Positioned absolutely to overlap during transition
+              >
+                {(() => {
+                  const testimonial = testimonials[activeIndex]
+                  return (
+                    <CardContent className="p-8 relative h-full flex flex-col justify-center">
+                      <div className="flex flex-col md:flex-row gap-8 items-center">
+                        <div className="md:w-1/3 flex flex-col items-center">
+                          <Avatar className="h-20 w-20 border-4 border-background shadow-medium">
+                            <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.author} />
+                            <AvatarFallback className="bg-primary text-primary-foreground">
+                              {testimonial.author
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="text-center mt-4">
+                            <h4 className="font-bold text-lg">{testimonial.author}</h4>
+                            <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                            <div className="flex items-center justify-center mt-2">
+                              {Array.from({ length: 5 }).map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`h-4 w-4 ${
+                                    i < testimonial.rating ? "text-yellow-500 fill-yellow-500" : "text-muted"
+                                  }`}
+                                />
+                              ))}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="md:w-2/3">
-                        <div className="bg-primary/10 p-1 rounded-full w-10 h-10 flex items-center justify-center mb-6">
-                          <Quote className="h-5 w-5 text-primary" />
+                        <div className="md:w-2/3">
+                          <div className="bg-primary/10 p-1 rounded-full w-10 h-10 flex items-center justify-center mb-6">
+                            <Quote className="h-5 w-5 text-primary" />
+                          </div>
+                          <p className="text-lg italic mb-6 leading-relaxed">{testimonial.quote}</p>
                         </div>
-                        <p className="text-lg italic mb-6 leading-relaxed">{testimonial.quote}</p>
                       </div>
-                    </div>
-                  </CardContent>
-                </div>
-              ))}
-            </div>
+                    </CardContent>
+                  )
+                })()}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           <div className="flex justify-center mt-8 gap-3">

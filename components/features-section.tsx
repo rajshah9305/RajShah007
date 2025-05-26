@@ -6,6 +6,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Zap, BarChart3, Bot, Code, ArrowRight, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import FeatureCard3D from "@/components/feature-card-3d"
+import { motion } from "framer-motion" // Ensure motion is imported if not already
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 
@@ -13,6 +14,11 @@ export function FeaturesSection() {
   const [activeTab, setActiveTab] = useState("processing")
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
+
+  const arrowVariants = {
+    rest: { x: 0 },
+    hover: { x: 5 },
+  }
 
   const features = [
     {
@@ -156,9 +162,22 @@ export function FeaturesSection() {
                         </li>
                       ))}
                     </ul>
-                    <Button className="group">
-                      Learn more
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    <Button asChild className="group">
+                      <motion.button
+                        whileHover="hover"
+                        initial="rest"
+                        animate="rest"
+                        className="inline-flex items-center justify-center" // Added to ensure layout consistency if Button's default styling is lost by asChild providing only base button element
+                      >
+                        Learn more
+                        <motion.span
+                          variants={arrowVariants}
+                          transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                          className="ml-2 inline-block" // Added inline-block for motion.span
+                        >
+                          <ArrowRight className="h-4 w-4" />
+                        </motion.span>
+                      </motion.button>
                     </Button>
                   </motion.div>
                   <motion.div
